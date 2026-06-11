@@ -1,0 +1,74 @@
+#--- Gráfico de Motivação: Panorama da Disartria e Condições Associadas no Brasil
+
+import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import numpy as np
+
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+fig.suptitle(
+    'Panorama da Disartria e Condições Associadas no Brasil',
+    fontsize=13, fontweight='bold', y=1.00
+)
+
+# --- Gráfico 1: Prevalência ---
+ax1 = axes[0]
+
+categorias = [
+    'Síndrome de Down\n(~300 mil pessoas)',
+    'Paralisia Cerebral\n(30–40 mil novos\ncasos/ano)',
+    'PC: sem\ndesenvolvimento\nda fala (1 em 4)'
+]
+valores = [300000, 35000, 1]  # valores simbólicos para escala
+cores = ['#4C72B0', '#DD8452', '#C44E52']
+
+barras = ax1.barh(categorias, [300, 35, 75], color=cores, edgecolor='white', height=0.5)
+
+ax1.set_xlabel('Escala representativa', fontsize=9)
+ax1.set_title('Prevalência no Brasil', fontsize=11, pad=10)
+ax1.set_xlim(0, 350)
+ax1.tick_params(axis='y', labelsize=9)
+ax1.tick_params(axis='x', bottom=False, labelbottom=False)
+ax1.spines['top'].set_visible(False)
+ax1.spines['right'].set_visible(False)
+ax1.spines['bottom'].set_visible(False)
+
+# --- Gráfico 2: Impacto na fala (PC) ---
+ax2 = axes[1]
+
+labels = ['Desenvolvem a fala\n(3 em 4)', 'Não desenvolvem\na fala (1 em 4)']
+sizes = [75, 25]
+cores_pizza = ['#4C72B0', '#C44E52']
+explode = (0, 0.05)
+
+wedges, texts, autotexts = ax2.pie(
+    sizes,
+    labels=labels,
+    autopct='%1.0f%%',
+    colors=cores_pizza,
+    explode=explode,
+    startangle=90,
+    textprops={'fontsize': 9},
+    wedgeprops={'edgecolor': 'white', 'linewidth': 1.5}
+)
+
+for autotext in autotexts:
+    autotext.set_fontsize(10)
+    autotext.set_fontweight('bold')
+    autotext.set_color('white')
+
+ax2.set_title(
+    'Desenvolvimento da fala em\ncriancas com Paralisia Cerebral',
+    fontsize=11, pad=10
+)
+
+# Fonte
+fig.text(
+    0.5, -0.04,
+    'Fontes: Ministério da Saúde (2019); World Cerebral Palsy Day; Sanarmed (2024).',
+    ha='center', fontsize=8, color='#666666', style='italic'
+)
+
+plt.tight_layout()
+plt.savefig('grafico_motivacao.png', dpi=300, bbox_inches='tight')
+plt.show()
+print("Gráfico salvo como grafico_motivacao.png")
